@@ -8,6 +8,7 @@ using UnityEngine;
 public class TrackCreator : MonoBehaviour
 {
     public float trackWidth = 1;
+    public float trackScale = 1;
     [Range(0.05f, 1.5f)]
     public float spacing = 1;
 
@@ -24,6 +25,8 @@ public class TrackCreator : MonoBehaviour
 
         int textureRepeat = Mathf.RoundToInt(tiling * points.Length * spacing * 0.05f);
         GetComponent<MeshRenderer>().sharedMaterial.mainTextureScale = new Vector2(1, textureRepeat);
+
+        transform.localScale = new Vector3(trackScale, trackScale, 1);
     }
     Mesh CreateTrackMesh(Vector2[] points, bool isClosed)
     {
@@ -79,6 +82,20 @@ public class TrackCreator : MonoBehaviour
         mesh.vertices = vertices;
         mesh.uv = uvs;
         mesh.triangles = triangles;
+
+        EdgeCollider2D[] edgeColliders = GetComponents<EdgeCollider2D>();
+        if (edgeColliders != null && edgeColliders.Length > 0)
+        {
+            for (int path = 0; path < edgeColliders.Length; path++)
+            {
+                List<Vector2> edgePath = new List<Vector2>();
+                for (int i = 0; i < vertices.Length && i + path < vertices.Length; i += 2)
+                {
+                    edgePath.Add(new Vector2(vertices[i + path].x, vertices[i + path].y));
+                }
+                edgeColliders[path].points = edgePath.ToArray();
+            }
+        }
 
         return mesh;
     }

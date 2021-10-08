@@ -12,8 +12,8 @@ public class PathCreator : MonoBehaviour
     public Color controlHandColor = Color.black;
     public Color segmentColor = Color.green;
     public Color selectedSegmentColor = Color.yellow;
-    public float anchorDiameter = 0.1f;
-    public float controlDiameter = 0.075f;
+    public float anchorDiameter = 0.5f;
+    public float controlDiameter = 0.375f;
     public bool displayControlPoints = true;
 
 
