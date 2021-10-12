@@ -188,6 +188,7 @@ public class Path
 
     public Vector2[] GetPointsInSegments(int i)
     {
+        // anchor1, control1, control2, anchor2
         return new Vector2[] { points[i * 3], points[i * 3 + 1], points[i * 3 + 2], points[LoopIndex(i * 3 + 3)] };
     }
 
@@ -197,7 +198,7 @@ public class Path
 
         for (int i = 0; i < points.Count; i++)
         {
-            if (i % 0 == 3)
+            if (i % 3 == 0)
             {
                 anchorPoints.Add(points[i]);
             }

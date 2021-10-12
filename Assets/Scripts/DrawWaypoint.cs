@@ -22,7 +22,7 @@ public class DrawWaypoint : MonoBehaviour
     {
         foreach (var node in waypointNode.nextWaypointNode)
         {
-            Debug.DrawLine(waypointNode.transform.position, node.transform.position, Color.green);
+            Debug.DrawLine(waypointNode.transform.position, node.transform.position, Color.blue);
         }
     }
 }

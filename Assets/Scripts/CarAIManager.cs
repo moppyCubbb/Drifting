@@ -7,7 +7,7 @@ public class CarAIManager : MonoBehaviour
 
     public AIMode aiMode;
     public float maximumSpeed = 15;
-    public bool canAvoidCards = true;
+    public bool canAvoidCars = true;
     public float approachWaypointLineDistance = 20f;
 
     [Range(0.0f, 1.0f)]
@@ -93,7 +93,7 @@ public class CarAIManager : MonoBehaviour
         Debug.DrawRay(transform.position, vectorToTarget, Color.cyan);
         vectorToTarget.Normalize();
 
-        if (canAvoidCards)
+        if (canAvoidCars)
         {
             AvoidCars(vectorToTarget, out vectorToTarget);
         }
@@ -205,10 +205,21 @@ public class CarAIManager : MonoBehaviour
             float distanceToTarget = (targetPosition - transform.position).magnitude;
             // how much desired the AI has to drive towards the waypoint vs avoiding other cars
             // as we get closer to the waypoint the desire to reach the waypoint increases
-            float driveToTargetInfluence = Mathf.Clamp(6.0f / distanceToTarget, 0.30f, 1.0f);
+            float driveToTargetInfluence = Mathf.Clamp(6.0f / distanceToTarget, 0.30f, 0.99f);
 
             // the desire to avoid the car
             float avoidanceInfluence = 1.0f - driveToTargetInfluence;
+            if ((avoidanceVector - (Vector2)transform.up).magnitude < 0.05f)
+            {
+                Vector2 avoidanceRight = (otherCarPosition - transform.position) + otherCarRightVector * 0.05f;
+                Vector2 avoidanceLeft = (otherCarPosition - transform.position) + otherCarPosition * -1 * 0.05f;
+
+                float avoidanceAngleRight = Vector2.Angle(avoidanceRight, vectorToTarget);
+                float avoidanceAngleLeft = Vector2.Angle(avoidanceLeft, vectorToTarget);
+
+                avoidanceVector = avoidanceAngleLeft < avoidanceAngleRight ? avoidanceLeft : avoidanceRight;
+            }
+
             avoidanceVectorLerped = Vector2.Lerp(avoidanceVectorLerped, avoidanceVector, Time.fixedDeltaTime * 5);
 
             // new direction affected by the desire of driving to the target and avoid other cars
