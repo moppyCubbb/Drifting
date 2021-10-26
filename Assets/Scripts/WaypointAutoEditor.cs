@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
+#if UNITY_EDITOR
 [CustomEditor(typeof(WaypointAutoCreator))]
 public class WaypointAutoEditor : Editor
 {
@@ -22,3 +23,4 @@ public class WaypointAutoEditor : Editor
         creator.InitAutoCreator();
     }
 }
+#endif

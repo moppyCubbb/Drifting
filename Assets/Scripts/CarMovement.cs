@@ -2,8 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using MLAPI;
 
-public class CarMovement : MonoBehaviour
+public class CarMovement : NetworkBehaviour
 {
     public float maximumSpeed = 10f;
     public float accelerationFactor = 5.0f;
@@ -17,7 +18,6 @@ public class CarMovement : MonoBehaviour
     float velocityUp = 0;
 
     float rotationAngle = 0;
-
 
     // Start is called before the first frame update
     void Start()
@@ -67,8 +67,6 @@ public class CarMovement : MonoBehaviour
         
         // apply steering by rotating the car object
         rb.MoveRotation(rotationAngle);
-
-        
     }
 
     //Kill orthogonal velocity

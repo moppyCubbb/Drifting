@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
+/*  Built game cannot use the UnityEditor namespace as it comes with the UnityEditor.dll
+    which is not compatible with any build
+    need to add #if UNITY_EDITOR for any editor method
+*/
+#if UNITY_EDITOR
 [CustomEditor(typeof(PathCreator))]
 public class PathEditor : Editor
 {
@@ -162,3 +167,4 @@ public class PathEditor : Editor
         HandleUtility.AddDefaultControl(0); //if nothing selected, the invisible defualt control will be selected and be able to select thing behind the mesh 
     }
 }
+#endif
