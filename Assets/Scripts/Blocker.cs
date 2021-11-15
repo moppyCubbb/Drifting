@@ -17,7 +17,7 @@ public class Blocker : NetworkBehaviour
 
         // Create random color for the blocker
         blockerColor.Value = Random.ColorHSV();
-        blockerScale.Value = Random.Range(0.5f, 1.5f);
+        blockerScale.Value = Random.Range(1f, 5f);
     }
 
     private void Update()

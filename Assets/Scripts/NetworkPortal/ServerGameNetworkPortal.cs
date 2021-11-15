@@ -15,6 +15,8 @@ public class ServerGameNetworkPortal : MonoBehaviour
     [Header("Settings")]
     [SerializeField]
     private int maxPlayer = 4;
+    [SerializeField]
+    NetworkObject playerPrefab;
 
     public static ServerGameNetworkPortal Instance => instance;
     private static ServerGameNetworkPortal instance;
@@ -69,7 +71,20 @@ public class ServerGameNetworkPortal : MonoBehaviour
     {
         gameInProgress = true;
 
-        NetworkSceneManager.SwitchScene("PlayerScene");
+        NetworkSceneManager.OnSceneSwitched += SpawnPlayersToGame;
+        NetworkSceneManager.SwitchScene("NetworkGameScene");
+    }
+
+    private void SpawnPlayersToGame()
+    {
+        Debug.Log("spawn player to game");
+        foreach (var client in NetworkManager.Singleton.ConnectedClientsList)
+        {
+            //gameNetworkPortal.ServerToClientSpawnPlayer(client.ClientId);
+            NetworkObject playerInstance = Instantiate(playerPrefab, new Vector3(10*client.ClientId, 0, 0), Quaternion.identity);
+            playerInstance.SpawnAsPlayerObject(client.ClientId);
+        }
+        NetworkSceneManager.OnSceneSwitched -= SpawnPlayersToGame;
     }
 
     public void EndRound()

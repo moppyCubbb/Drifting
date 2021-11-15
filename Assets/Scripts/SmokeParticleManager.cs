@@ -1,20 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SmokeParticleManager : MonoBehaviour
 {
-    ParticleSystem smokeParticleSystem;
-
-    float particleEmssionRate = 0;
-
-    CarMovement carMovement;
+    [SerializeField]
+    private CarMovement carMovement;
+    
+    private ParticleSystem smokeParticleSystem;
+    private float particleEmssionRate = 0;
 
     ParticleSystem.EmissionModule smokeParticleSystemEmssionModule;
     // Start is called before the first frame update
     void Start()
     {
-        carMovement = GetComponentInParent<CarMovement>();
+        //carMovement = GetComponentInParent<CarMovement>();
         smokeParticleSystem = GetComponent<ParticleSystem>();
         if (smokeParticleSystem)
         {
@@ -28,7 +26,7 @@ public class SmokeParticleManager : MonoBehaviour
     {
         particleEmssionRate = Mathf.Lerp(particleEmssionRate, 0, Time.deltaTime * 5);
         smokeParticleSystemEmssionModule.rateOverTime = particleEmssionRate;
-    
+
         if (carMovement.IsScreeching(out float lateralVelocity, out bool isBraking))
         {
             particleEmssionRate = 30;

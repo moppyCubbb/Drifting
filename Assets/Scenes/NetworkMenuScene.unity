@@ -620,6 +620,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxPlayer: 4
+  playerPrefab: {fileID: -391084670360689760, guid: 4d3a96ce80ff8f4458ce2fa9e5a4ccbb, type: 3}
 --- !u!114 &1270917197
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -632,6 +633,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28fc0c567a1ceb847bfdbe5e3a3f50f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerPrefab: {fileID: -391084670360689760, guid: 4d3a96ce80ff8f4458ce2fa9e5a4ccbb, type: 3}
 --- !u!114 &1270917198
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -788,6 +790,7 @@ MonoBehaviour:
     RegisteredScenes:
     - NetworkLobbyScene
     - NetworkMenuScene
+    - NetworkGameScene
     AllowRuntimeSceneChanges: 0
     NetworkPrefabs:
     - Prefab: {fileID: 9180233479977309094, guid: 4d3a96ce80ff8f4458ce2fa9e5a4ccbb, type: 3}

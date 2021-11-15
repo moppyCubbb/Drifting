@@ -7,28 +7,13 @@ public class BlockerSpawner : NetworkBehaviour
     [SerializeField]
     private NetworkObject blockerPrefab;
 
-    private Camera mainCamera;
-
-    private void Start()
-    {
-        mainCamera = Camera.main;
-    }
-
-    private void OnEnable()
-    {
-        if (mainCamera == null)
-        {
-            mainCamera = Camera.main;
-        }
-    }
-
     private void Update()
     {
         if (!IsOwner) return;
 
         if (!Input.GetMouseButtonDown(0)) return;
 
-        Vector3 position = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+        Vector3 position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         position.z = 0;
         SpawnBlockerServerRpc(position);
         /*Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);*/

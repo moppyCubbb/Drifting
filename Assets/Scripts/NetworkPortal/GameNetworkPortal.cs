@@ -129,6 +129,25 @@ public class GameNetworkPortal : MonoBehaviour
     #endregion
 
     #region message senders
+    public void ClientToServerSceneChanged(int newScene)
+    {
+        if (NetworkManager.Singleton.IsHost)
+        {
+            OnClientSceneChanged?.Invoke(NetworkManager.Singleton.ServerClientId, newScene);
+        }
+        else if (NetworkManager.Singleton.IsConnectedClient)
+        {
+            using (var buffer = PooledNetworkBuffer.Get())
+            {
+                using (var writer = PooledNetworkWriter.Get(buffer))
+                {
+                    writer.WriteInt32(newScene);
+                    CustomMessagingManager.SendNamedMessage("ClientToServerSceneChanged", NetworkManager.Singleton.ServerClientId, buffer, NetworkChannel.Internal);
+                }
+            }
+        }
+    }
+
     public void ServerToClientConnectResult(ulong netId, ConnectionStatus status)
     {
         using (var buffer = PooledNetworkBuffer.Get())
@@ -149,25 +168,6 @@ public class GameNetworkPortal : MonoBehaviour
             {
                 writer.WriteInt32((int)status);
                 CustomMessagingManager.SendNamedMessage("ServerToClientSetDisconnectReason", netId, buffer, NetworkChannel.Internal);
-            }
-        }
-    }
-
-    public void ClientToServerSceneChanged(int newScene)
-    {
-        if (NetworkManager.Singleton.IsHost)
-        {
-            OnClientSceneChanged?.Invoke(NetworkManager.Singleton.ServerClientId, newScene);
-        }
-        else if (NetworkManager.Singleton.IsConnectedClient)
-        {
-            using (var buffer = PooledNetworkBuffer.Get())
-            {
-                using (var writer = PooledNetworkWriter.Get(buffer))
-                {
-                    writer.WriteInt32(newScene);
-                    CustomMessagingManager.SendNamedMessage("ClientToServerSceneChanged", NetworkManager.Singleton.ServerClientId, buffer, NetworkChannel.Internal);
-                }
             }
         }
     }

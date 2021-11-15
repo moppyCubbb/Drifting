@@ -1,8 +1,8 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using MLAPI;
+using MLAPI.Messaging;
+using MLAPI.NetworkVariable;
+using MLAPI.Prototyping;
 
 public class CarMovement : NetworkBehaviour
 {
@@ -11,19 +11,31 @@ public class CarMovement : NetworkBehaviour
     public float steerFactor = 2f;
     public float driftFactor = 0.95f;
 
-    Rigidbody2D rb;
+    private Rigidbody2D rb;
+    private NetworkTransform networkTransform;
 
-    float accelerationInput = 0;
-    float steerInput = 0;
-    float velocityUp = 0;
+    private float accelerationInput = 0;
+    private float steerInput = 0;
+    private float velocityUp = 0;
 
-    float rotationAngle = 0;
+    private float rotationAngle = 0;
+
+    public NetworkVariableVector2 Velocity = new NetworkVariableVector2(new NetworkVariableSettings
+    {
+        WritePermission = NetworkVariablePermission.OwnerOnly,
+        ReadPermission = NetworkVariablePermission.Everyone,
+    });
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         rotationAngle = rb.rotation;
+        networkTransform = GetComponent<NetworkTransform>();
+        if (NetworkManager.Singleton == null)
+        {
+            networkTransform.enabled = false;
+        }
     }
 
     private void FixedUpdate()
@@ -86,7 +98,22 @@ public class CarMovement : NetworkBehaviour
 
     private float GetLateralVelocity()
     {
-        return Vector2.Dot(transform.right, rb.velocity);
+        if (NetworkManager.Singleton)
+        {
+            if (IsOwner)
+            {
+                Velocity.Value = rb.velocity;
+                return Vector2.Dot(transform.right, rb.velocity);
+            }
+            else
+            {
+                return Vector2.Dot(networkTransform.transform.right, Velocity.Value);
+            }
+        }
+        else
+        {
+            return Vector2.Dot(transform.right, rb.velocity);
+        }
     }
 
     public bool IsScreeching(out float lateralVelocity, out bool isBraking)

@@ -1,11 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using MLAPI;
 
-public class WheelTrailRendererManager : MonoBehaviour
+public class WheelTrailRendererManager : NetworkBehaviour
 {
-    public TrailRenderer[] trailRenderers;
-    CarMovement carMovement;
+    [SerializeField]
+    private TrailRenderer[] trailRenderers;
+
+    private CarMovement carMovement;
 
     // Start is called before the first frame update
     void Start()

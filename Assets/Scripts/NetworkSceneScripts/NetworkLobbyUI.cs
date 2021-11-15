@@ -3,7 +3,6 @@ using UnityEngine.UI;
 using MLAPI;
 using MLAPI.Messaging;
 using MLAPI.NetworkVariable.Collections;
-using System;
 using MLAPI.Connection;
 
 public class NetworkLobbyUI : NetworkBehaviour

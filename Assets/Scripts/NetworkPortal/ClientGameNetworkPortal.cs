@@ -7,6 +7,10 @@ using MLAPI;
 [RequireComponent(typeof(GameNetworkPortal))]
 public class ClientGameNetworkPortal : MonoBehaviour
 {
+    [Header("Settings")]
+    [SerializeField]
+    NetworkObject playerPrefab;
+
     public static ClientGameNetworkPortal Instance => instance;
     private static ClientGameNetworkPortal instance;
 
@@ -36,6 +40,7 @@ public class ClientGameNetworkPortal : MonoBehaviour
         gameNetworkPortal.OnNetworkReadied += HandleNetworkReadied;
         gameNetworkPortal.OnConnectionFinished += HandleConnectionFinished;
         gameNetworkPortal.OnDisconnectReasonReceived += HandleDisconnectReasonReceived;
+
         NetworkManager.Singleton.OnClientConnectedCallback += HandleClientDisconnect;
     }
 

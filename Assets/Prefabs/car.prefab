@@ -4986,6 +4986,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a6d8b7980f77e34aae94d3eb93d1e76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  carMovement: {fileID: 1915967703}
 --- !u!1 &815419925
 GameObject:
   m_ObjectHideFlags: 0
@@ -9939,6 +9940,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a6d8b7980f77e34aae94d3eb93d1e76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  carMovement: {fileID: 1915967703}
 --- !u!1 &1631462382
 GameObject:
   m_ObjectHideFlags: 0
@@ -10503,8 +10505,8 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -10799,6 +10801,8 @@ MonoBehaviour:
   accelerationFactor: 5
   steerFactor: 1.6
   driftFactor: 0.98
+  Velocity:
+    m_InternalValue: {x: 0, y: 0}
 --- !u!114 &1784636818
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10870,7 +10874,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FixedSendsPerSecond: 20
+  FixedSendsPerSecond: 120
   AssumeSyncedSends: 1
   InterpolatePosition: 1
   SnapDistance: 10
